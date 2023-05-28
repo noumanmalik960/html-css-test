@@ -8,9 +8,8 @@ import {
   Flex,
   Box,
 } from "@chakra-ui/react";
-import { ReactSVG } from "react-svg";
 import { IoMdClose } from "react-icons/io";
-import AppCheckbox from "./AppCheckbox";
+import AppCheckbox from "../AppCheckbox";
 
 function RegistrationModal({ isOpen, onClose }) {
   return (

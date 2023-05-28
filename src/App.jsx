@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MenubarList from "./components/MenubarList";
 import Pagination from "./components/Pagination";
 import Titlebar from "./components/Titlebar";
-import Filters from "./components/Filters";
+import Filters from "./components/TableActions";
 import Table from "./components/Table";
 import "./App.css";
 
@@ -24,7 +24,6 @@ function App() {
         </ul>
       </div>
 
-      <Filters />
       <Table />
       <Pagination />
     </div>

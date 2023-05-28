@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
-function Dropdown({ data }) {
+function Dropdown({ data, currApprovalFilter, setCurrApprovalFilter }) {
   const ref = useRef();
   const [open, setOpen] = React.useState(false);
   const [currValue, setCurrValue] = React.useState(data[0]);
 
+  // This is handling outside click to close dropdown
   useEffect(() => {
     let handler = (e) => {
       if (!ref.current.contains(e.target)) setOpen(false);
@@ -34,7 +35,14 @@ function Dropdown({ data }) {
         <div className="dropdown-items">
           <ul>
             {data.map((item, index) => (
-              <li key={index} onClick={() => setCurrValue(item)}>
+              <li
+                key={index}
+                onClick={() => {
+                  setCurrApprovalFilter(item);
+
+                  setCurrValue(item);
+                }}
+              >
                 {item}
               </li>
             ))}
