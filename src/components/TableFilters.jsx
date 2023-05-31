@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Dropdown from "./Dropdown";
+import { Dropdown } from "../components";
 
 function TableFilters({ orignalData, filteredData, setFilteredData }) {
   const dropDownOptionsData = {
@@ -17,6 +17,7 @@ function TableFilters({ orignalData, filteredData, setFilteredData }) {
   const [currApprovalFilter, setCurrApprovalFilter] = useState(
     dropDownOptionsData.approvalStatusFilters[0]
   );
+
   // filter table data based on curr selected filter from state
   useEffect(() => {
     if (currApprovalFilter === "승인여부 전체") {
@@ -59,12 +60,18 @@ function TableFilters({ orignalData, filteredData, setFilteredData }) {
             data={dropDownOptionsData.approvalStatusFilters}
             currApprovalFilter={currApprovalFilter}
             setCurrApprovalFilter={setCurrApprovalFilter}
+            title={"STATUS_FILTER"}
           />
-          <Dropdown data={dropDownOptionsData.dateFilters} />
-          <Dropdown data={dropDownOptionsData.displayLimits} />
+          <Dropdown
+            data={dropDownOptionsData.dateFilters}
+            title={"DATE_FILTER"}
+          />
+          <Dropdown
+            data={dropDownOptionsData.displayLimits}
+            title={"LIMIT_FILTER"}
+          />
         </div>
       </div>
-      {currApprovalFilter}
       {/* Separator */}
       <hr className="separator" />
     </>

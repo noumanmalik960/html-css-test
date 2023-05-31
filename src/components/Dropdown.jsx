@@ -1,29 +1,43 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
-function Dropdown({ data, currApprovalFilter, setCurrApprovalFilter }) {
+function Dropdown(props) {
   const ref = useRef();
-  const [open, setOpen] = React.useState(false);
-  const [currValue, setCurrValue] = React.useState(data[0]);
+  const [open, setOpen] = useState(false);
+  const [currValue, setCurrValue] = useState(props.data[0]);
 
-  // This is handling outside click to close dropdown
+  // props.title identifies the type of dropdown
+
   useEffect(() => {
-    let handler = (e) => {
-      if (!ref.current.contains(e.target)) setOpen(false);
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setOpen(false);
+      }
     };
 
-    document.addEventListener("mousedown", handler);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleDropdownClick = () => {
+    setOpen((prevState) => !prevState);
+  };
+
+  const handleItemClick = (item) => {
+    if (props.title === "APPROVE_REJECT_FILTER") {
+      props.setCurrStatusFilterValue(item);
+      setCurrValue(item);
+    } else if (props.title === "STATUS_FILTER") {
+      props.setCurrApprovalFilter(item);
+      setCurrValue(item);
+    } else setCurrValue(item);
+  };
+
   return (
-    <div
-      ref={ref}
-      className="dropdown"
-      onClick={() => setOpen((prevState) => !prevState)}
-    >
+    <div ref={ref} className="dropdown" onClick={handleDropdownClick}>
       <p>{currValue}</p>
       {open ? (
         <BiChevronUp size={24} color="#5A616A" />
@@ -31,24 +45,17 @@ function Dropdown({ data, currApprovalFilter, setCurrApprovalFilter }) {
         <BiChevronDown size={24} color="#5A616A" />
       )}
 
-      {open ? (
+      {open && (
         <div className="dropdown-items">
           <ul>
-            {data.map((item, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  setCurrApprovalFilter(item);
-
-                  setCurrValue(item);
-                }}
-              >
+            {props.data.map((item, index) => (
+              <li key={index} onClick={() => handleItemClick(item)}>
                 {item}
               </li>
             ))}
           </ul>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import MenubarList from "./components/MenubarList";
-import Pagination from "./components/Pagination";
-import Titlebar from "./components/Titlebar";
-import Filters from "./components/TableActions";
-import Table from "./components/Table";
+import { MenubarList, Pagination, Titlebar, Table } from "./components";
 import "./App.css";
 
 function App() {
@@ -12,6 +8,7 @@ function App() {
   return (
     <div className="app-container">
       <Titlebar />
+
       <hr className="separator" />
 
       {/* Menubar */}
@@ -25,6 +22,7 @@ function App() {
       </div>
 
       <Table />
+
       <Pagination />
     </div>
   );

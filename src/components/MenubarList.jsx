@@ -12,13 +12,18 @@ const MenubarList = ({ currMenuIndex, setCurrMenuIndex }) => {
     "상담내역 관리",
     "1:1문의내역 조회",
   ];
+
+  const handleClick = (index) => {
+    setCurrMenuIndex(index);
+  };
+
   return (
     <>
       {menuItems.map((item, index) => (
         <li
           key={index}
           className={index == currMenuIndex ? "selected-menu" : null}
-          onClick={() => setCurrMenuIndex(index)}
+          onClick={() => handleClick(index)}
         >
           {item}
         </li>

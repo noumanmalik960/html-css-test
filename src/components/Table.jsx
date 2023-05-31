@@ -1,38 +1,25 @@
-import React, { useEffect, useState } from "react";
-import TableActions from "./TableActions";
-import TableFilters from "./TableFilters";
+import React, { useState } from "react";
+import { DocumentsModal, TableActions, TableFilters } from "../components";
+import { useDisclosure } from "@chakra-ui/react";
 
 function Table() {
-  const tableHeaderData = [
-    <input type="checkbox" />,
-    "NO",
-    "기존유형",
-    "신청유형",
-    "제출서류",
-    "신청일시",
-    "승인여부",
-    "승인거부 사유",
-    "승인일시",
-    "관리자",
-  ];
-
   const initialData = [
     {
       id: 0,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "소득적격",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승⁠인⁠대⁠기",
       reason: "",
-      approvalDate: "2023-01-10 09:00:00",
+      approvalDate: "",
       manager: "김관리자",
     },
     {
       id: 1,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승⁠인⁠대⁠기",
       reason: "",
@@ -41,9 +28,9 @@ function Table() {
     },
     {
       id: 2,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승인거부",
       reason:
@@ -53,9 +40,9 @@ function Table() {
     },
     {
       id: 3,
+      checked: false,
       existingType: "일반개인",
       applicationtype: "소득적격",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승인완료", // approved
       reason: "",
@@ -64,20 +51,20 @@ function Table() {
     },
     {
       id: 4,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
-      status: "승⁠인⁠대⁠기", // waiting
+      status: "승⁠인⁠대⁠기", // pending
       reason: "",
       approvalDate: "",
       manager: "",
     },
     {
       id: 5,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승인거부", // denied
       reason:
@@ -87,9 +74,9 @@ function Table() {
     },
     {
       id: 6,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승⁠인⁠대⁠기", // pending
       reason: "",
@@ -98,9 +85,9 @@ function Table() {
     },
     {
       id: 7,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승인거부", // denied
       reason:
@@ -111,20 +98,20 @@ function Table() {
 
     {
       id: 8,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "소득적격",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승⁠인⁠대⁠기",
       reason: "",
-      approvalDate: "2023-01-10 09:00:00",
+      approvalDate: "",
       manager: "김관리자",
     },
     {
       id: 9,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승⁠인⁠대⁠기",
       reason: "",
@@ -133,9 +120,9 @@ function Table() {
     },
     {
       id: 10,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승⁠인⁠대⁠기", // waiting
       reason: "",
@@ -144,9 +131,9 @@ function Table() {
     },
     {
       id: 11,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승인거부", // denied
       reason:
@@ -156,20 +143,20 @@ function Table() {
     },
     {
       id: 12,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "소득적격",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승⁠인⁠대⁠기",
       reason: "",
-      approvalDate: "2023-01-10 09:00:00",
+      approvalDate: "",
       manager: "김관리자",
     },
     {
       id: 13,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승⁠인⁠대⁠기",
       reason: "",
@@ -178,9 +165,9 @@ function Table() {
     },
     {
       id: 14,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승인거부",
       reason:
@@ -190,9 +177,9 @@ function Table() {
     },
     {
       id: 15,
+      checked: false,
       existingType: "일반개인",
       applicationtype: "소득적격",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승인완료", // approved
       reason: "",
@@ -202,9 +189,9 @@ function Table() {
 
     {
       id: 16,
+      checked: false,
       existingType: "소득적격",
       applicationtype: "개인전문",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승인거부",
       reason:
@@ -214,9 +201,9 @@ function Table() {
     },
     {
       id: 17,
+      checked: false,
       existingType: "일반개인",
       applicationtype: "소득적격",
-      viewBtn: "보⁠기",
       submitDate: "2023-01-10 09:00:00",
       status: "승인완료", // approved
       reason: "",
@@ -224,9 +211,37 @@ function Table() {
       manager: "김관리자",
     },
   ];
-
   const [tableData, setTableData] = useState(initialData);
   const [filteredData, setFilteredData] = useState(tableData);
+  const [globalCheck, setGlobalCheck] = useState(false);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const checkedItems = filteredData.filter((item) => item.checked);
+
+  const handleCheck = (id) => {
+    const updatedData = filteredData.map((item) => {
+      // uncheck global input if any of the item is unchecked
+      if (item.checked) {
+        setGlobalCheck(false);
+      }
+      if (item.id === id) {
+        return { ...item, checked: !item.checked };
+      }
+      return item;
+    });
+
+    setFilteredData(updatedData);
+  };
+
+  const toggleGlobalCheck = () => {
+    setGlobalCheck((prevState) => !prevState);
+
+    const updatedData = filteredData.map((item) => {
+      return { ...item, checked: !globalCheck };
+    });
+    setFilteredData(updatedData);
+  };
 
   return (
     <div>
@@ -235,25 +250,46 @@ function Table() {
         setFilteredData={setFilteredData}
         orignalData={tableData}
       />
-      <TableActions />
+      <TableActions
+        checkedItems={checkedItems}
+        checkedItemsLength={checkedItems.length}
+      />
+      <hr />
       <table className="table">
         <tbody>
           <tr>
-            {tableHeaderData.map((item, index) => (
-              <th key={index}>{item}</th>
-            ))}
+            <th>
+              <input
+                type="checkbox"
+                checked={globalCheck}
+                onChange={toggleGlobalCheck}
+              />
+            </th>
+            <th>NO</th>
+            <th>기존유형</th>
+            <th>신청유형</th>
+            <th>제출서류</th>
+            <th>신청일시</th>
+            <th>승인여부</th>
+            <th>승인거부 사유</th>
+            <th>승인일시</th>
+            <th>관리자</th>
           </tr>
           {filteredData &&
             filteredData.map((item, index) => (
               <tr key={index}>
                 <td>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    checked={item.checked}
+                    onChange={(e) => handleCheck(item.id)}
+                  />
                 </td>
                 <td>{index + 1}</td>
                 <td>{item?.existingType}</td>
                 <td>{item?.applicationtype}</td>
-                <td>
-                  <span className="look-btn">{item?.viewBtn}</span>
+                <td onClick={onOpen}>
+                  <span className="look-btn">보⁠기</span>
                 </td>
                 <td>{item?.submitDate}</td>
                 <td>
@@ -278,6 +314,9 @@ function Table() {
             ))}
         </tbody>
       </table>
+
+      {/* Documents modal */}
+      <DocumentsModal onClose={onClose} isOpen={isOpen} onSave={onClose} />
     </div>
   );
 }

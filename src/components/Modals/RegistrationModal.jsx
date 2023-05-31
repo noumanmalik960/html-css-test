@@ -11,7 +11,7 @@ import {
 import { IoMdClose } from "react-icons/io";
 import AppCheckbox from "../AppCheckbox";
 
-function RegistrationModal({ isOpen, onClose }) {
+function RegistrationModal({ isOpen, onClose, onSave }) {
   return (
     <Modal
       isCentered
@@ -44,7 +44,10 @@ function RegistrationModal({ isOpen, onClose }) {
             <div className="div2">abc111, abc222</div>
             <div className="div3">회원명/법인명</div>
             <div className="div4">김길동, ㈜가나다라투자</div>
-            <div className="div5">승인거부 사유</div>
+            <div className="div5">
+              승인거부 사유
+              {/* <span className="new-indicator" /> */}
+            </div>
             <div className="div6">
               <span style={{ display: "flex" }}>
                 <AppCheckbox />
@@ -90,7 +93,7 @@ function RegistrationModal({ isOpen, onClose }) {
 
         {/* bottom buttons */}
         <ModalFooter justifyContent={"center"} gap={3}>
-          <span className="modal-btn-primary" onClick={onClose}>
+          <span className="modal-btn-primary" onClick={onSave}>
             저장{" "}
           </span>
           <span className="modal-btn-secondary" onClick={onClose}>
